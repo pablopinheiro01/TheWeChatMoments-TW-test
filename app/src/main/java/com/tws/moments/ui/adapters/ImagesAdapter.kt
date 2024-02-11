@@ -1,4 +1,4 @@
-package com.tws.moments.adapters
+package com.tws.moments.ui.adapters
 
 import android.view.View
 import android.view.ViewGroup

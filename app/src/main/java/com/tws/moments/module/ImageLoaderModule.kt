@@ -5,6 +5,7 @@ import com.tws.moments.imageloader.GlideImageLoader
 import com.tws.moments.imageloader.ImageLoader
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.internal.managers.ApplicationComponentManager
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -17,7 +18,7 @@ object ImageLoaderModule{
 
     @Provides
     @Singleton
-    fun provideGlideImageLoader( @ApplicationContext context: Context): ImageLoader{
+    fun provideGlideImageLoader( @ApplicationContext context: Context): ImageLoader {
         return GlideImageLoader(context)
     }
 

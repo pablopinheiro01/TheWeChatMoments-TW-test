@@ -1,4 +1,4 @@
-package com.tws.moments.adapters
+package com.tws.moments.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,17 +7,19 @@ import com.tws.moments.data.api.entry.TweetBean
 import com.tws.moments.data.api.entry.UserBean
 import com.tws.moments.databinding.ItemMomentHeadBinding
 import com.tws.moments.databinding.LayoutBaseTweetBinding
+import com.tws.moments.imageloader.ImageLoader
+import com.tws.moments.ui.model.Tweet
 import com.tws.moments.ui.viewholders.HeaderViewHolder
 import com.tws.moments.ui.viewholders.TweetViewHolder
+import javax.inject.Inject
 
 
 private const val TYPE_TWEET = 1
 private const val TYPE_HEAD = 1000
 
-class MomentsAdapter() :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MomentsAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var tweets: MutableList<TweetBean>? = null
+    var tweets: MutableList<Tweet>? = null
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -68,14 +70,16 @@ class MomentsAdapter() :
         }
     }
 
-    fun addMoreTweet(tweets: List<TweetBean>?) {
+    fun addMoreTweet(tweets: List<Tweet>?) {
         if (tweets.isNullOrEmpty() || this.tweets.isNullOrEmpty()) {
             return
         }
-        val newTweetSize = tweets.size
-        val oldTweetsSize = this.tweets!!.size
-        this.tweets!!.addAll(tweets)
-        notifyItemRangeInserted(oldTweetsSize + 1, newTweetSize)
+        this.tweets?.let { mutableTweets ->
+            val newTweetSize = tweets.size
+            val oldTweetsSize = mutableTweets.size
+            mutableTweets.addAll(tweets)
+            notifyItemRangeInserted(oldTweetsSize + 1, newTweetSize)
+        }
     }
 
     private fun tweetIndex(position: Int) = position - 1

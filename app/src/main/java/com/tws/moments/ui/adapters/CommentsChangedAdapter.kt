@@ -1,4 +1,4 @@
-package com.tws.moments.adapters
+package com.tws.moments.ui.adapters
 
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater

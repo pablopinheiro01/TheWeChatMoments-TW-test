@@ -4,7 +4,10 @@ import android.util.Log
 import com.tws.moments.data.api.MomentService
 import com.tws.moments.data.api.entry.TweetBean
 import com.tws.moments.data.api.entry.UserBean
+import com.tws.moments.data.api.response.TweetResponse
 import com.tws.moments.data.api.response.toTweetBean
+import com.tws.moments.ui.model.Tweet
+import com.tws.moments.ui.model.toTweet
 import javax.inject.Inject
 
 class MomentRepositoryImpl @Inject constructor(
@@ -19,10 +22,9 @@ class MomentRepositoryImpl @Inject constructor(
         return service.user("jsmith")
     }
 
-    suspend fun fetchTweets(): List<TweetBean>{
+    suspend fun fetchTweets(): List<Tweet>{
         return service.tweets("jsmith").map {
-            Log.i(TAG, "fetchTweets: $it")
-            it.toTweetBean()
+            it.toTweet()
         }
     }
 

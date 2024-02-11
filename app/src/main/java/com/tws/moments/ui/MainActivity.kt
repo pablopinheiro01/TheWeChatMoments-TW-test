@@ -8,15 +8,21 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.tws.moments.adapters.MomentsAdapter
+import com.tws.moments.ui.adapters.MomentsAdapter
 import com.tws.moments.databinding.ActivityMainBinding
+import com.tws.moments.imageloader.GlideImageLoader
+import com.tws.moments.imageloader.ImageLoader
 import com.tws.moments.utils.ScreenAdaptiveUtil
 import com.tws.moments.utils.dip
 import com.tws.moments.ui.views.LoadMoreListener
 import com.tws.moments.ui.views.itemdecoration.MomentDividerItemDecoration
 import com.tws.moments.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 private const val TAG = "MainActivity##"
 
@@ -74,7 +80,9 @@ class MainActivity : AppCompatActivity() {
                     Log.i(TAG, "internal load more")
                     viewModel.loadMoreTweets(reqPageIndex) {
                         reqPageIndex++
-                        adapter.addMoreTweet(it)
+                        lifecycleScope.launch(Dispatchers.Main){
+                            adapter.addMoreTweet(it)
+                        }
                     }
                 }
             }

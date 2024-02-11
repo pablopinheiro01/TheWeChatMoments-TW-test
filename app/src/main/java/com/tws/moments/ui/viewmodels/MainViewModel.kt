@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.tws.moments.data.api.entry.TweetBean
 import com.tws.moments.data.api.entry.UserBean
 import com.tws.moments.data.repository.MomentRepositoryImpl
+import com.tws.moments.ui.model.Tweet
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -28,12 +29,12 @@ class MainViewModel @Inject constructor(
     val userBean: LiveData<UserBean>
         get() = _userBean
 
-    private var _tweets = MutableLiveData<List<TweetBean>>()
+    private var _tweets = MutableLiveData<List<Tweet>>()
 
-    val tweets: LiveData<List<TweetBean>>
+    val tweets: LiveData<List<Tweet>>
         get() = _tweets
 
-    private var allTweets: List<TweetBean>? = null
+    private var allTweets: List<Tweet>? = null
 
     init {
         loadUserInfo()
@@ -96,7 +97,7 @@ class MainViewModel @Inject constructor(
 //            }
         }
 
-    fun loadMoreTweets(pageIndex: Int, onLoad: (List<TweetBean>?) -> Unit) {
+    fun loadMoreTweets(pageIndex: Int, onLoad: (List<Tweet>?) -> Unit) {
         if (pageIndex < 0) {
             throw IllegalArgumentException("page index must greater than or equal to 0.")
         }
