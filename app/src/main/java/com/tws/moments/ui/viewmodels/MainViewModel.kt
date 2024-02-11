@@ -1,13 +1,12 @@
-package com.tws.moments.viewmodels
+package com.tws.moments.ui.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tws.moments.data.api.MomentService
 import com.tws.moments.data.api.entry.TweetBean
 import com.tws.moments.data.api.entry.UserBean
-import com.tws.moments.data.repository.MomentRepository
 import com.tws.moments.data.repository.MomentRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +19,9 @@ private const val TAG = "MainViewModel##"
 private const val PAGE_TWEET_COUNT = 5
 
 @HiltViewModel
-class MainViewModel @Inject constructor( private val repository: MomentRepositoryImpl) : ViewModel() {
+class MainViewModel @Inject constructor(
+    private val repository: MomentRepositoryImpl
+) : ViewModel() {
 
     private var _userBean = MutableLiveData(UserBean())
 
@@ -40,20 +41,21 @@ class MainViewModel @Inject constructor( private val repository: MomentRepositor
     }
 
     private fun loadUserInfo() {
-        viewModelScope.launch(Dispatchers.IO){
+        viewModelScope.launch(Dispatchers.IO) {
             val result = try {
                 repository.fetchUser()
             } catch (e: Exception) {
                 e.printStackTrace()
                 null
             }
-            _userBean.value = result
+            Log.i(TAG, "loadUserInfo: $result")
+            _userBean.postValue(result)
         }
     }
 
 
     private fun loadTweets() {
-        viewModelScope.launch(Dispatchers.IO){
+        viewModelScope.launch(Dispatchers.IO) {
             val result = try {
                 repository.fetchTweets()
             } catch (e: Exception) {
@@ -61,12 +63,15 @@ class MainViewModel @Inject constructor( private val repository: MomentRepositor
                 null
             }
 
+            Log.i(TAG, "loadTweets: $result")
+
             allTweets = result
 
             if ((allTweets?.size ?: 0) > PAGE_TWEET_COUNT) {
-                _tweets.value = allTweets?.subList(0, PAGE_TWEET_COUNT)
+//                _tweets.postValue(allTweets?.filter { it.content?.isNotEmpty() ?: false }?.subList(0, PAGE_TWEET_COUNT))
+                _tweets.postValue(allTweets?.subList(0, PAGE_TWEET_COUNT))
             } else {
-                _tweets.value = emptyList()
+                _tweets.postValue(emptyList())
             }
         }
     }
@@ -78,12 +83,12 @@ class MainViewModel @Inject constructor( private val repository: MomentRepositor
     val pageCount: Int
         get() {
             return allTweets?.let { listTweets ->
-                if((listTweets.size % PAGE_TWEET_COUNT) == 0){
+                if ((listTweets.size % PAGE_TWEET_COUNT) == 0) {
                     (listTweets.size / PAGE_TWEET_COUNT)
-                }else{
+                } else {
                     (listTweets.size / PAGE_TWEET_COUNT) + 1
                 }
-            } ?: run{0}
+            } ?: run { 0 }
 //            return when {
 //                allTweets.isNullOrEmpty() -> 0
 //                allTweets!!.size % PAGE_TWEET_COUNT == 0 -> allTweets!!.size / PAGE_TWEET_COUNT
@@ -100,7 +105,7 @@ class MainViewModel @Inject constructor( private val repository: MomentRepositor
             return
         }
 
-        viewModelScope.launch(Dispatchers.IO){
+        viewModelScope.launch(Dispatchers.IO) {
             val startIndex = PAGE_TWEET_COUNT * pageIndex
             allTweets?.let { listTweets ->
                 val endIndex = min(listTweets.size, PAGE_TWEET_COUNT * (pageIndex + 1))

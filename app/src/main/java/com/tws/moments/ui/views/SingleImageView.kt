@@ -1,4 +1,4 @@
-package com.tws.moments.views
+package com.tws.moments.ui.views
 
 import android.content.Context
 import android.graphics.Bitmap

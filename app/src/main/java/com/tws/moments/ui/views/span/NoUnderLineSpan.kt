@@ -1,4 +1,4 @@
-package com.tws.moments.views.span
+package com.tws.moments.ui.views.span
 
 import android.text.TextPaint
 import android.text.style.UnderlineSpan

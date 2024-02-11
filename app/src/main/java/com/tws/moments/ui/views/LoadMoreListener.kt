@@ -1,4 +1,4 @@
-package com.tws.moments.views
+package com.tws.moments.ui.views
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView

@@ -1,3 +1,6 @@
 package com.tws.moments.data.api.entry
 
-data class CommentsBean(var content: String? = null)
+data class CommentsBean(
+    val content: String? = null,
+
+)

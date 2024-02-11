@@ -1,4 +1,4 @@
-package com.tws.moments
+package com.tws.moments.ui
 
 import android.graphics.Color
 import android.os.Build
@@ -13,16 +13,19 @@ import com.tws.moments.adapters.MomentsAdapter
 import com.tws.moments.databinding.ActivityMainBinding
 import com.tws.moments.utils.ScreenAdaptiveUtil
 import com.tws.moments.utils.dip
-import com.tws.moments.views.LoadMoreListener
-import com.tws.moments.views.itemdecoration.MomentDividerItemDecoration
-import com.tws.moments.viewmodels.MainViewModel
+import com.tws.moments.ui.views.LoadMoreListener
+import com.tws.moments.ui.views.itemdecoration.MomentDividerItemDecoration
+import com.tws.moments.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "MainActivity##"
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+
+    private val binding get() = _binding!!
+
+    private var _binding: ActivityMainBinding? = null
 
 //    private val viewModel: MainViewModel by viewModels {
 //        val repository = MomentRepository()
@@ -40,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         initWindow()
 
         ScreenAdaptiveUtil.adaptive(this)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setupRecyclerView()
@@ -79,14 +82,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun subscribe() {
-        viewModel.userBean.observe(this, Observer {
-            adapter.userBean = it
+        viewModel.userBean.observe(this, Observer { user ->
+            adapter.userBean = user
         })
 
-        viewModel.tweets.observe(this, Observer {
+        viewModel.tweets.observe(this, Observer { tweets ->
             binding.swipeRefreshLayout.isRefreshing = false
             reqPageIndex = 1
-            adapter.tweets = it.toMutableList()
+            adapter.tweets = tweets.toMutableList()
         })
     }
 
@@ -96,5 +99,10 @@ class MainActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.statusBarColor = Color.TRANSPARENT
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

@@ -1,13 +1,12 @@
-package com.tws.moments.di.module
+package com.tws.moments.module
 
 import com.tws.moments.data.api.MomentService
-import com.tws.moments.data.repository.MomentRepository
-import com.tws.moments.data.repository.MomentRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Qualifier
@@ -34,6 +33,22 @@ object RestApiModule{
     @Singleton
     fun provideMomentService(@MomentServiceRetrofit retrofit: Retrofit): MomentService {
         return retrofit.create(MomentService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
+        return HttpLoggingInterceptor().apply {
+            setLevel(HttpLoggingInterceptor.Level.BODY)
+        }
+    }
+
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+        return OkHttpClient.Builder()
+            .addInterceptor(loggingInterceptor)
+            .build()
     }
 
 //    @Provides

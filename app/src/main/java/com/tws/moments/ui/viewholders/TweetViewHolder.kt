@@ -1,4 +1,4 @@
-package com.tws.moments.viewholders
+package com.tws.moments.ui.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
@@ -11,8 +11,8 @@ import com.tws.moments.data.api.entry.ImagesBean
 import com.tws.moments.data.api.entry.TweetBean
 import com.tws.moments.databinding.LayoutBaseTweetBinding
 import com.tws.moments.utils.dip
-import com.tws.moments.views.itemdecoration.ImagesDecoration
-import com.tws.moments.views.itemdecoration.MarginItemDecoration
+import com.tws.moments.ui.views.itemdecoration.ImagesDecoration
+import com.tws.moments.ui.views.itemdecoration.MarginItemDecoration
 
 private const val IMAGE_SPAN_COUNT = 3
 

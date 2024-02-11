@@ -1,4 +1,4 @@
-package com.tws.moments.views.itemdecoration
+package com.tws.moments.ui.views.itemdecoration
 
 import android.graphics.Canvas
 import android.graphics.Paint

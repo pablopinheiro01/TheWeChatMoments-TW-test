@@ -7,8 +7,8 @@ import com.tws.moments.data.api.entry.TweetBean
 import com.tws.moments.data.api.entry.UserBean
 import com.tws.moments.databinding.ItemMomentHeadBinding
 import com.tws.moments.databinding.LayoutBaseTweetBinding
-import com.tws.moments.viewholders.HeaderViewHolder
-import com.tws.moments.viewholders.TweetViewHolder
+import com.tws.moments.ui.viewholders.HeaderViewHolder
+import com.tws.moments.ui.viewholders.TweetViewHolder
 
 
 private const val TYPE_TWEET = 1

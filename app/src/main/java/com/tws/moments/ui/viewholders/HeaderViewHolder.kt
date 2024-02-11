@@ -1,4 +1,4 @@
-package com.tws.moments.viewholders
+package com.tws.moments.ui.viewholders
 
 import androidx.recyclerview.widget.RecyclerView
 import com.tws.moments.TWApplication
