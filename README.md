@@ -4,6 +4,10 @@
 2. I made extensive changes to this code, improving and refactoring many aspects over the course of two days. However, they won't be evaluating any modifications made to this particular code.
 3. My approach to inputting this code, which I've opened and modified on my GitHub, aims to showcase my perspective and restructure it in a more efficient manner.
 
+### Result
+
+https://github.com/pablopinheiro01/TheWeChatMoments-TW-test/assets/34134071/ed459fcd-c4f0-4a42-831c-330fe4e88cbc
+
 
 ### Requirements
 1. Android Studio Bumblebee (2021.1.1) - via [Android Developers](https://developer.android.com/studio)
