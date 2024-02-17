@@ -1,16 +1,16 @@
 package com.tws.moments.ui.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tws.moments.data.api.entry.TweetBean
 import com.tws.moments.data.api.entry.UserBean
 import com.tws.moments.data.repository.MomentRepositoryImpl
 import com.tws.moments.ui.model.Tweet
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.math.min
@@ -34,7 +34,7 @@ class MainViewModel @Inject constructor(
     val tweets: LiveData<List<Tweet>>
         get() = _tweets
 
-    private var allTweets: List<Tweet>? = null
+    private var _allTweets: List<Tweet>? = null
 
     init {
         loadUserInfo()
@@ -46,10 +46,9 @@ class MainViewModel @Inject constructor(
             val result = try {
                 repository.fetchUser()
             } catch (e: Exception) {
-                e.printStackTrace()
                 null
             }
-            Log.i(TAG, "loadUserInfo: $result")
+//            Log.i(TAG, "loadUserInfo: $result")
             _userBean.postValue(result)
         }
     }
@@ -60,21 +59,21 @@ class MainViewModel @Inject constructor(
             val result = try {
                 repository.fetchTweets()
             } catch (e: Exception) {
-                e.printStackTrace()
                 null
             }
 
-            Log.i(TAG, "loadTweets: $result")
+//            Log.i(TAG, "loadTweets: $result")
 
-            allTweets = result
+            _allTweets = result
 
-            if ((allTweets?.size ?: 0) > PAGE_TWEET_COUNT) {
+            if ((_allTweets?.size ?: 0) > PAGE_TWEET_COUNT) {
 //                _tweets.postValue(allTweets?.filter { it.content?.isNotEmpty() ?: false }?.subList(0, PAGE_TWEET_COUNT))
-                _tweets.postValue(allTweets?.subList(0, PAGE_TWEET_COUNT))
+                _tweets.postValue(_allTweets?.subList(0, PAGE_TWEET_COUNT))
             } else {
                 _tweets.postValue(emptyList())
             }
         }
+
     }
 
     fun refreshTweets() {
@@ -83,7 +82,7 @@ class MainViewModel @Inject constructor(
 
     val pageCount: Int
         get() {
-            return allTweets?.let { listTweets ->
+            return _allTweets?.let { listTweets ->
                 if ((listTweets.size % PAGE_TWEET_COUNT) == 0) {
                     (listTweets.size / PAGE_TWEET_COUNT)
                 } else {
@@ -108,7 +107,7 @@ class MainViewModel @Inject constructor(
 
         viewModelScope.launch(Dispatchers.IO) {
             val startIndex = PAGE_TWEET_COUNT * pageIndex
-            allTweets?.let { listTweets ->
+            _allTweets?.let { listTweets ->
                 val endIndex = min(listTweets.size, PAGE_TWEET_COUNT * (pageIndex + 1))
                 val result = listTweets.subList(startIndex, endIndex)
                 onLoad(result)

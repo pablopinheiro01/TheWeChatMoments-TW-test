@@ -33,11 +33,6 @@ class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainBinding? = null
 
-//    private val viewModel: MainViewModel by viewModels {
-//        val repository = MomentRepository()
-//        MainViewModelFactory(repository)
-//    }
-
     private val viewModel: MainViewModel by viewModels()
 
     private val adapter = MomentsAdapter()
@@ -51,6 +46,7 @@ class MainActivity : AppCompatActivity() {
         ScreenAdaptiveUtil.adaptive(this)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.hide()
 
         setupRecyclerView()
         subscribe()
@@ -75,9 +71,9 @@ class MainActivity : AppCompatActivity() {
 
         binding.recyclerView.addOnScrollListener(object : LoadMoreListener() {
             override fun onLoadMore() {
-                Log.i(TAG, "load more reqPageIndex:$reqPageIndex,pageCount:${viewModel.pageCount}")
+//                Log.i(TAG, "load more reqPageIndex:$reqPageIndex,pageCount:${viewModel.pageCount}")
                 if (reqPageIndex <= viewModel.pageCount - 1) {
-                    Log.i(TAG, "internal load more")
+//                    Log.i(TAG, "internal load more")
                     viewModel.loadMoreTweets(reqPageIndex) {
                         reqPageIndex++
                         lifecycleScope.launch(Dispatchers.Main){
