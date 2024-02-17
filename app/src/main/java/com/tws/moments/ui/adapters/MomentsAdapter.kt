@@ -66,7 +66,9 @@ class MomentsAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         if (position == 0) {
             (holder as? HeaderViewHolder)?.bind(userBean)
         } else {
-            (holder as? TweetViewHolder)?.bind(tweets!![tweetIndex(position)])
+            tweets?.let {
+                (holder as? TweetViewHolder)?.bind(it[tweetIndex(position)])
+            }
         }
     }
 

@@ -35,9 +35,11 @@ class ImagesAdapter : RecyclerView.Adapter<ImagesAdapter.ImageHolder>() {
 
     override fun onBindViewHolder(holder: ImageHolder, position: Int) {
         (holder.itemView as? AppCompatImageView)?.let {
-            val url = images!![position]
-            it.tag = url
-            TWApplication.imageLoader.displayImage(url, it)
+            images?.let { listImage ->
+                val url = listImage[position]
+                it.tag = url
+                TWApplication.imageLoader.displayImage(url, it)
+            }
         }
     }
 
