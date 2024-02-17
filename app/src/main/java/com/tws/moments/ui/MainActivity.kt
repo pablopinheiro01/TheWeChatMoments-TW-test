@@ -71,9 +71,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.recyclerView.addOnScrollListener(object : LoadMoreListener() {
             override fun onLoadMore() {
-//                Log.i(TAG, "load more reqPageIndex:$reqPageIndex,pageCount:${viewModel.pageCount}")
                 if (reqPageIndex <= viewModel.pageCount - 1) {
-//                    Log.i(TAG, "internal load more")
                     viewModel.loadMoreTweets(reqPageIndex) {
                         reqPageIndex++
                         lifecycleScope.launch(Dispatchers.Main){

@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tws.moments.TWApplication
 import com.tws.moments.ui.adapters.CommentsAdapter
 import com.tws.moments.ui.adapters.ImagesAdapter
-import com.tws.moments.data.api.entry.ImagesBean
 import com.tws.moments.databinding.LayoutBaseTweetBinding
 import com.tws.moments.ui.model.Comment
 import com.tws.moments.ui.model.Image
@@ -34,6 +33,11 @@ class TweetViewHolder(private val binding: LayoutBaseTweetBinding) :
         renderSender(tweet.sender)
         renderTextContent(tweet.content)
         renderImages(tweet.images)
+        renderComments(tweet.comments)
+    }
+
+    private fun renderComments(comments: List<Comment>?) {
+        commentsAdapter.comments = comments
     }
 
     private fun renderSender(sender: Sender?){

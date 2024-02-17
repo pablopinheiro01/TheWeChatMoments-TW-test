@@ -7,13 +7,14 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.tws.moments.R
+import com.tws.moments.ui.model.Comment
 import com.tws.moments.ui.model.Tweet
 import com.tws.moments.utils.clickableSpan
 import com.tws.moments.utils.inflate
 
 class CommentsAdapter : RecyclerView.Adapter<CommentsAdapter.CommentsHolder>() {
 
-    var comments: List<Tweet>? = null
+    var comments: List<Comment>? = null
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -28,7 +29,9 @@ class CommentsAdapter : RecyclerView.Adapter<CommentsAdapter.CommentsHolder>() {
     }
 
     override fun onBindViewHolder(holder: CommentsHolder, position: Int) {
-        holder.bind(comments!![position])
+        comments?.let { listComments ->
+            holder.bind(listComments[position])
+        }
     }
 
     inner class CommentsHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -38,12 +41,12 @@ class CommentsAdapter : RecyclerView.Adapter<CommentsAdapter.CommentsHolder>() {
             commentTV.movementMethod = LinkMovementMethod.getInstance()
         }
 
-        fun bind(tweet: Tweet) {
-            val spannableString = tweet.sender?.nick?.clickableSpan {
-                Toast.makeText(it.context, "${tweet.sender.nick} info.", Toast.LENGTH_SHORT).show()
+        fun bind(comment: Comment) {
+            val spannableString = comment.sender?.nick?.clickableSpan {
+                Toast.makeText(it.context, "${comment.sender.nick} info.", Toast.LENGTH_SHORT).show()
             }
             commentTV.text = spannableString
-            commentTV.append(":" + (tweet.content ?: ""))
+            commentTV.append(":" + (comment.content ?: ""))
         }
     }
 }
