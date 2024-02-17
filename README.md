@@ -1,3 +1,10 @@
+### Programmer Notes
+
+1. Below, I've outlined the requirements as described in the official note to guide the preparation of the environment and the initiation of the application. 
+2. I made extensive changes to this code, improving and refactoring many aspects over the course of two days. However, they won't be evaluating any modifications made to this particular code.
+3. My approach to inputting this code, which I've opened and modified on my GitHub, aims to showcase my perspective and restructure it in a more efficient manner.
+
+
 ### Requirements
 1. Android Studio Bumblebee (2021.1.1) - via [Android Developers](https://developer.android.com/studio)
 2. Android SDK 31 and BuildTools 30.0.3 - via [Android SDK Manager](https://developer.android.com/studio/intro/update#sdk-manager)
