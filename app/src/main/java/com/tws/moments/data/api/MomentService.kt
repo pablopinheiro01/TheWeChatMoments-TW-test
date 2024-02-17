@@ -20,6 +20,5 @@ interface MomentService {
      * https://thoughtworks-ios.herokuapp.com/user/jsmith/tweets
      */
     @GET("user/{name}/tweets")
-//    suspend fun tweets(@Path("name") user: String): List<TweetBean>
     suspend fun tweets(@Path("name") user: String): List<TweetResponse>
 }

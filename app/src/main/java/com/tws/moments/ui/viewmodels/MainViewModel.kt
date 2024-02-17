@@ -48,7 +48,6 @@ class MainViewModel @Inject constructor(
             } catch (e: Exception) {
                 null
             }
-//            Log.i(TAG, "loadUserInfo: $result")
             _userBean.postValue(result)
         }
     }
@@ -62,12 +61,9 @@ class MainViewModel @Inject constructor(
                 null
             }
 
-//            Log.i(TAG, "loadTweets: $result")
-
             _allTweets = result
 
             if ((_allTweets?.size ?: 0) > PAGE_TWEET_COUNT) {
-//                _tweets.postValue(allTweets?.filter { it.content?.isNotEmpty() ?: false }?.subList(0, PAGE_TWEET_COUNT))
                 _tweets.postValue(_allTweets?.subList(0, PAGE_TWEET_COUNT))
             } else {
                 _tweets.postValue(emptyList())
@@ -89,11 +85,6 @@ class MainViewModel @Inject constructor(
                     (listTweets.size / PAGE_TWEET_COUNT) + 1
                 }
             } ?: run { 0 }
-//            return when {
-//                allTweets.isNullOrEmpty() -> 0
-//                allTweets!!.size % PAGE_TWEET_COUNT == 0 -> allTweets!!.size / PAGE_TWEET_COUNT
-//                else -> allTweets!!.size / PAGE_TWEET_COUNT + 1
-//            }
         }
 
     fun loadMoreTweets(pageIndex: Int, onLoad: (List<Tweet>?) -> Unit) {
@@ -113,13 +104,6 @@ class MainViewModel @Inject constructor(
                 onLoad(result)
             }
         }
-
-//        viewModelScope.launch {
-//            val startIndex = PAGE_TWEET_COUNT * pageIndex
-//            val endIndex = min(allTweets!!.size, PAGE_TWEET_COUNT * (pageIndex + 1))
-//            val result = allTweets!!.subList(startIndex, endIndex)
-//            onLoad(result)
-//        }
     }
 
 }

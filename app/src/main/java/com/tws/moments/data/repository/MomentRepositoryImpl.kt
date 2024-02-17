@@ -27,8 +27,4 @@ class MomentRepositoryImpl @Inject constructor(
             it.toTweet()
         }.filter { it.content != null || it.images?.isEmpty() == false }
     }
-
-//    suspend fun fetchTweets(): List<TweetBean> {
-//        return service.tweets("jsmith")
-//    }
 }

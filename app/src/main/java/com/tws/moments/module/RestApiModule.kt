@@ -51,12 +51,6 @@ object RestApiModule{
             .build()
     }
 
-//    @Provides
-//    @Singleton
-//    fun provideMomentRepositoryImpl( @com.tws.moments.di.module.MomentService service : MomentService): MomentRepository {
-//        return MomentRepositoryImpl(service)
-//    }
-
 }
 
 @Qualifier
